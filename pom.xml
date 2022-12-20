@@ -1,12 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.efsavage</groupId>
+	<groupId>com.mt</groupId>
 	<artifactId>hello-world-war</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<packaging>war</packaging>
 	<name>Hello World Web Application Repository</name>
 	<description>Simplest possible Java Webapp</description>
+	
+	<distributionManagement>
+
+         <repository>
+         <id>jfrog</id>
+         <name>Sample-release</name>
+         <url>https://ansibledemo123.jfrog.io/artifactory/AnsibleDemoRelease/</url>
+        </repository>
+
+<snapshotRepository>
+<id>jfrog</id>
+<name>Sample-snapshot</name>
+<url>https://ansibledemo123.jfrog.io/artifactory/AnsibleDemoRelease/</url>
+</snapshotRepository>
+</distributionManagement>
 
 	<build>
 		<plugins>
