@@ -1,1 +1,3 @@
-
+---
+  vars_files:
+    - demo.yml
