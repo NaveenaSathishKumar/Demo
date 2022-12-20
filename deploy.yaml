@@ -2,18 +2,6 @@
 - hosts: all
   become: true
   tasks:
-    - name: get current date
-      set_fact: bkpdate="{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
-    - name: create directory with a date in name
-      file: path="/opt/apache-tomcat-9.0.70/backup/{{ bkpdate }}" state=directory mode=0755
-    - name: backup war"
-      become: true
-      copy:
-        src: /opt/apache-tomcat-9.0.70/webapps/maven-web-application.war
-        dest: /opt/apache-tomcat-9.0.70/backup/{{ bkpdate }}/
-        remote_src: yes
-        owner: root
-        mode: '0644'
     - name: Download war from artifacts and deploy to Tomcat
       maven_artifact:
         group_id: com.mt
