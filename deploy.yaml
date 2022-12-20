@@ -12,7 +12,7 @@
         src: /opt/apache-tomcat-9.0.70/webapps/maven-web-application.war
         dest: /opt/apache-tomcat-9.0.70/backup/{{ bkpdate }}/
         remote_src: yes
-        owner: ansible
+        owner: root
         mode: '0644'
     - name: Download war from artifacts and deploy to Tomcat
       maven_artifact:
