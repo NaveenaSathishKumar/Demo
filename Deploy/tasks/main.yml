@@ -1,5 +1,6 @@
 ---
 # Deploy to Tomcat
+    - include_vars: demo.yml
     - name: Download war from artifacts and deploy to Tomcat
       maven_artifact:
         group_id: com.mt
