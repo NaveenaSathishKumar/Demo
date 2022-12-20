@@ -1,6 +1,8 @@
 ---
 - hosts: all
   become: true
+  roles:
+    - backup
   tasks:
     - name: Download war from artifacts and deploy to Tomcat
       maven_artifact:
