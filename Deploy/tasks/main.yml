@@ -1,1 +1,15 @@
-
+---
+# Deploy to Tomcat
+    - name: Download war from artifacts and deploy to Tomcat
+      maven_artifact:
+        group_id: com.mt
+        artifact_id: maven-web-application
+        extension: war
+        version: "{{ version }}"
+        repository_url: https://ansibledemo123.jfrog.io/artifactory/AnsibleDemoRelease/
+        username: "{{ username }}"
+        password: "{{ password }}"
+        dest: /opt/apache-tomcat-9.0.70/webapps/
+        mode: 777
+      notify:
+        - restart tomcat
