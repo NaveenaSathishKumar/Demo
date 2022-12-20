@@ -1,8 +1,10 @@
 ---
 - hosts: all
   become: true
+  vars_files:
+    - demo.yml
   roles:
-    - backup
+    - backup    
   tasks:
     - name: Download war from artifacts and deploy to Tomcat
       maven_artifact:
