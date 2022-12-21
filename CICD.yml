@@ -1,0 +1,60 @@
+def readpom = 'pom.xml'
+pipeline {
+    agent any
+        tools
+    {
+            maven 'maven3.8.6' 
+
+    }
+    stages {
+        stage(‘CheckOut’) {
+            steps{
+                git credentialsId: 'GIT', url: 'https://github.com/NaveenaSathishKumar/Demo'
+        }
+        }
+		stage(‘Build’) {
+            steps {
+			  sh 'mvn clean package'
+            }
+        }
+		stage(‘Test’) {
+            steps {
+				withSonarQubeEnv('sonarscanner') {
+				sh 'mvn sonar:sonar'
+				} 
+			} 
+		}
+		
+		stage(‘QualityGate’) {
+            steps {
+                    script {
+
+				timeout(time: 1, unit: 'HOURS') { 
+				def qg = waitForQualityGate() 
+				if (qg.status != 'OK') 
+				{
+				error "Pipeline aborted due to quality gate failure: ${qg.status}"
+				}
+				else
+				{
+               echo "Quality gate passed"
+                  }                 
+                }
+                    }
+                  }
+			}
+			
+		stage(‘Artifactory’) {
+            steps{  sh 'mvn clean deploy' }
+        }	
+			
+		stage(‘Deploy’) {
+		    
+		    steps {    
+		        ansiblePlaybook credentialsId: 'Private-key1', disableHostKeyChecking: true , extras: '-e version=${readpomxml.version}' , installation: 'ansible2', inventory: 'dev.inv', playbook: 'deploy.yaml', vaultCredentialsId: 'vaultpss1' 
+        }
+        }		
+		
+       
+    }
+}
